@@ -1288,7 +1288,8 @@
             }
 
             // ========== 状态检测（优先检查status字段）==========
-            const status = (data.status || '').toUpperCase();
+            // API响应可能是 data.status 或 data.data.status
+            const status = (data.status || data.data?.status || '').toUpperCase();
             console.log('任务状态:', status, '图片数量:', urls.length);
 
             // 1. 明确失败：只有 FAILURE 才算真正失败
