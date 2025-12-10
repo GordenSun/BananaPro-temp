@@ -1143,8 +1143,8 @@
             }
 
             const hasImages = item.imageUrls && item.imageUrls.length > 0;
-            // rejected状态也可以刷新（以防是查询问题）
-            const canRefresh = !isCompleted && !isRealFailed;
+            // 除了已完成的，其他状态都可以刷新（包括失败的）
+            const canRefresh = !isCompleted;
             let thumbText = '等待结果...';
             if (isRealFailed) thumbText = '生成失败';
             if (isRejected) thumbText = '审核未通过';
