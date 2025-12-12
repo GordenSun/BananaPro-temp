@@ -1207,9 +1207,11 @@
         try {
           // 使用静默模式，不更新主界面状态栏
           await pollTaskStatus(taskId, key, 1, true);
-          renderHistoryList();
         } catch (e) {
           console.error('刷新失败:', e);
+        } finally {
+          // 无论成功还是失败，都刷新历史列表以显示最新状态
+          renderHistoryList();
         }
       };
 
