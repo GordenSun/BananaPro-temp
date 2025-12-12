@@ -1297,7 +1297,8 @@
             // 1. 明确失败：只有 FAILURE 才算真正失败
             if (status === 'FAILURE') {
               addHistoryItem(taskId, 'failed', []);
-              throw new Error(data.fail_reason || '任务失败');
+              // 使用return而不是throw，防止catch块覆盖failed状态
+              return { success: false, urls: [], failed: true, reason: data.fail_reason || data.data?.fail_reason || '任务失败' };
             }
 
             // 2. 明确成功：SUCCESS/COMPLETED/DONE/FINISHED
