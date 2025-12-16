@@ -1386,12 +1386,20 @@
 
           if (!res.ok) {
             let errMessage = `HTTP ${res.status}`;
+            // 特殊处理413错误
+            if (res.status === 413) {
+              throw new Error('413错误，上传的附件太大');
+            }
             try {
               const errData = await res.json();
               if (errData.error && errData.error.message) {
                 errMessage = errData.error.message;
               } else if (errData.message) {
                 errMessage = errData.message;
+              }
+              // 特殊处理额度不足错误
+              if (errMessage.includes('token quota is not enough')) {
+                errMessage = '剩余额度不足';
               }
             } catch (e) { }
             throw new Error(errMessage);
